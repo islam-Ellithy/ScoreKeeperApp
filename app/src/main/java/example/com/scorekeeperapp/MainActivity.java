@@ -9,19 +9,21 @@ import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements MainContract.IView {
 
-    TextView scoreA, scoreB;
-    ProgressBar progressBar;
-    int x = 0, y = 0;
+    private TextView textViewScoreA;
+    private TextView textViewScoreB;
+    private ProgressBar progressBar;
+    private int scoreTeamA = 0;
+    private int scoreTeamB = 0;
 
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
         super.onSaveInstanceState(outState);
 
-        outState.putInt("x", x);
-        outState.putInt("y", y);
+        outState.putInt("scoreTeamA", scoreTeamA);
+        outState.putInt("scoreTeamB", scoreTeamB);
 
     }
 
@@ -33,83 +35,83 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
 
-        scoreA = (TextView) findViewById(R.id.scoreA);
-        scoreB = (TextView) findViewById(R.id.scoreB);
+        textViewScoreA = (TextView) findViewById(R.id.scoreA);
+        textViewScoreB = (TextView) findViewById(R.id.scoreB);
         progressBar = (ProgressBar) findViewById(R.id.progressBar);
 
         if (savedInstanceState != null) {
-            x = savedInstanceState.getInt("x");
-            y = savedInstanceState.getInt("y");
+            scoreTeamA = savedInstanceState.getInt("scoreTeamA");
+            scoreTeamB = savedInstanceState.getInt("scoreTeamB");
 
-            scoreA.setText(String.valueOf(x));
-            scoreB.setText(String.valueOf(y));
+            textViewScoreA.setText(String.valueOf(scoreTeamA));
+            textViewScoreB.setText(String.valueOf(scoreTeamB));
         }
 
 
     }
 
-    public void updateUIA(int x) {
+    public void updateScoreA(int x) {
         if (progressBar.getVisibility() == View.GONE)
             progressBar.setVisibility(View.VISIBLE);
-        scoreA.setText("" + x);
+        textViewScoreA.setText(String.valueOf(x));
     }
 
-    public void updateUIB(int x) {
+    public void updateScoreB(int x) {
         if (progressBar.getVisibility() == View.GONE)
             progressBar.setVisibility(View.VISIBLE);
 
-        scoreB.setText("" + y);
+        textViewScoreB.setText(String.valueOf(scoreTeamB));
     }
 
 
-    public void resetA(View view) {
-        x = 0;
-        updateUIA(x);
+    public void resetScoreA(View view) {
+        scoreTeamA = 0;
+        updateScoreA(scoreTeamA);
     }
 
-    public void resetB(View view) {
-        y = 0;
-        updateUIB(y);
+    public void resetScoreB(View view) {
+        scoreTeamB = 0;
+        updateScoreB(scoreTeamB);
     }
 
-    public void resetAll(View view) {
-        resetA(view);
-        resetB(view);
+    public void resetAllScores(View view) {
+        resetScoreA(view);
+        resetScoreB(view);
         if (progressBar.getVisibility() != View.GONE)
             progressBar.setVisibility(View.GONE);
     }
 
 
-    public void plus1A(View view) {
-        x++;
-        updateUIA(x);
+    public void addPlus1ScoreA(View view) {
+        scoreTeamA++;
+        updateScoreA(scoreTeamA);
     }
 
-    public void plus2A(View view) {
-        x += 2;
-        updateUIA(x);
+    public void addPlus2ScoreA(View view) {
+        scoreTeamA += 2;
+        updateScoreA(scoreTeamA);
     }
 
-    public void plus3A(View view) {
-        x += 3;
-        updateUIA(x);
+    public void addPlus3ScoreA(View view) {
+        scoreTeamA += 3;
+        updateScoreA(scoreTeamA);
     }
 
 
-    public void plus1B(View view) {
-        y++;
-        updateUIB(y);
+    public void addPlus1ScoreB(View view) {
+        scoreTeamB++;
+        updateScoreB(scoreTeamB);
     }
 
-    public void plus2B(View view) {
-        y += 2;
-        updateUIB(y);
+    public void addPlus2ScoreB(View view) {
+        scoreTeamB += 2;
+        updateScoreB(scoreTeamB);
 
     }
 
-    public void plus3B(View view) {
-        y += 3;
-        updateUIB(y);
+    public void addPlus3ScoreB(View view) {
+        scoreTeamB += 3;
+        updateScoreB(scoreTeamB);
 
     }
 
